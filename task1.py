@@ -32,3 +32,4 @@ def get_user_input():
     start_station = input("Please enter your starting station: ")
     destination_station = input("Please enter your destination station: ")
     return start_station, destination_station
+
