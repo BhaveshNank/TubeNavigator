@@ -1,6 +1,6 @@
 from loader import load_graph_from_csv
 from task1 import dijkstra, get_user_input
-from clrsPython.print_path import print_path as print_path_func
+from print_path import print_path as print_path_func
 
 def main():
     graph = load_graph_from_csv("London_underground_data.csv")
