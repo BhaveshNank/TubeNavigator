@@ -14,7 +14,7 @@ def load_graph_for_bfs(csv_filename):
 
     # Create mappings
     station_to_index = {station: index for index, station in enumerate(unique_stations)}
-    print("Station to Index Mapping:", station_to_index)
+    # print("Station to Index Mapping:", station_to_index)
 
     index_to_station = {index: station for station, index in station_to_index.items()}
 
@@ -27,10 +27,10 @@ def load_graph_for_bfs(csv_filename):
             if len(row) < 3 or not row[1].strip() or not row[2].strip():
                 continue
             start, end = row[1].strip(), row[2].strip()
-            print(f"Processing edge: {start} -> {end}")  # Debugging print
+            # print(f"Processing edge: {start} -> {end}")  # Debugging print
 
             if start not in station_to_index or end not in station_to_index:
-                print(f"Missing station in mapping: start={start}, end={end}")
+                # print(f"Missing station in mapping: start={start}, end={end}")
                 continue
 
             start_idx = station_to_index[start]
@@ -42,8 +42,6 @@ def load_graph_for_bfs(csv_filename):
 if __name__ == "__main__":
     # Example usage of load_graph_for_bfs
     graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")
-    print("Graph loaded successfully")
+    # print("Graph loaded successfully")
     print("Number of stations:", len(station_to_index))
     # Add more print statements or logic as needed to test the functionality
-
-
