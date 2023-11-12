@@ -1,16 +1,15 @@
 from bfs import bfs  # Replace 'bfs_library' with the actual name of the BFS library file
-from loader3 import load_graph_from_csv
+from loader3 import load_graph_for_bfs
 from task1 import get_user_input
 
 
 
 def main():
-    graph = load_graph_from_csv("London_underground_data.csv")
+    graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")
     start_station, destination_station = get_user_input()
 
-    # Assuming that your graph uses indices, convert station names to indices
-    start_index = graph.get_index_of_station(start_station)
-    destination_index = graph.get_index_of_station(destination_station)
+    start_index = station_to_index.get(start_station)
+    destination_index = station_to_index.get(destination_station)
 
     if start_index is None or destination_index is None:
         print("One or more of the stations entered do not exist in the network.")
