@@ -1,27 +1,48 @@
 from loader3 import load_graph_for_bfs
 
+def get_all_edges(graph):
+    edges = set()
+    for u in range(graph.get_card_V()):
+        for edge in graph.get_adj_list(u):
+            v = edge.get_v()
+            # Ensure each edge is added once (for undirected graphs)
+            if (v, u) not in edges:
+                edges.add((u, v))
+    return edges
+
 def kruskals_algorithm(graph):
-    # Sort edges based on weight
-    edges = sorted(graph.edges, key=lambda edge: edge.weight)
+    edges = []
+    for u in range(graph.get_card_V()):
+        for edge in graph.get_adj_list(u):
+            v = edge.get_v()
+            edges.append((u, v, 1))  # Use a default weight of 1
+
+    edges = sorted(edges, key=lambda edge: edge[2])
+
+    forests = {vertex: {vertex} for vertex in range(graph.get_card_V())}
 
     spanning_tree = set()
-    forests = {vertex: {vertex} for vertex in graph.vertices}
-
     for edge in edges:
-        u, v = edge.vertices
-        if forests[u] != forests[v]:  # If u and v are in different trees
+        u, v, _ = edge
+        if forests[u] != forests[v]:
             spanning_tree.add(edge)
-            # Merge the two trees
             merged_forest = forests[u].union(forests[v])
             for vertex in merged_forest:
                 forests[vertex] = merged_forest
 
     return spanning_tree
 
-graph = load_graph_for_bfs("London_underground_data.csv") 
+
+graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")
 # Assuming 'graph' is your tube network graph
+# Assuming graph is your AdjacencyListGraph instance
 spanning_tree = kruskals_algorithm(graph)
-severable_edges = set(graph.edges) - spanning_tree
+
+all_edges = get_all_edges(graph)
+spanning_tree_edges = {(u, v) for u, v, _ in spanning_tree}  # Extract just the vertex pairs
+
+severable_edges = all_edges - spanning_tree_edges
 
 for edge in severable_edges:
-    print(f"{edge.start} -- {edge.end}")
+    print(f"{index_to_station[edge[0]]} -- {index_to_station[edge[1]]}")
+

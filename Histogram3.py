@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-
-# Import your graph loading and Dijkstra's function
 from loader3 import load_graph_for_bfs
 from task3 import load_graph_for_bfs
 from bfs import bfs
@@ -16,7 +14,6 @@ def calculate_stops_between_stations(graph, station_to_index, index_to_station):
                 journey_times.append(distances[end])
 
     return journey_times
-
 
 
 def plot_histogram(journey_times):
