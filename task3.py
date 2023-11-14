@@ -1,8 +1,10 @@
 from bfs import bfs  # Replace 'bfs_library' with the actual name of the BFS library file
 from loader3 import load_graph_for_bfs
-from task1 import get_user_input
 
-
+def get_user_input():
+    start_station = input("Please enter your starting station: ")
+    destination_station = input("Please enter your destination station: ")
+    return start_station, destination_station
 
 def main():
     graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")

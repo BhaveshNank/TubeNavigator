@@ -45,4 +45,3 @@ severable_edges = all_edges - spanning_tree_edges
 
 for edge in severable_edges:
     print(f"{index_to_station[edge[0]]} -- {index_to_station[edge[1]]}")
-

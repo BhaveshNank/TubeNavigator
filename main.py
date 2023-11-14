@@ -1,6 +1,11 @@
 from loader import load_graph_from_csv
-from task1 import dijkstra, get_user_input
+from task1 import dijkstra
 from print_path import print_path as print_path_func
+
+def get_user_input():
+    start_station = input("Please enter your starting station: ")
+    destination_station = input("Please enter your destination station: ")
+    return start_station, destination_station
 
 def main():
     graph = load_graph_from_csv("London_underground_data.csv")
