@@ -1,18 +1,19 @@
 import matplotlib.pyplot as plt
-
-# Import your graph loading and Dijkstra's function
 from loader import load_graph_from_csv
-from task1 import dijkstra
+from dijkstra import dijkstra
+from main import convert_graph
 
-def calculate_journey_times_for_all_pairs(graph):
+def calculate_journey_times_for_all_pairs(graph, station_to_index):
     journey_times = []
-    for start_station in graph:
-        distances, _ = dijkstra(graph, start_station)
-        for end_station in graph:
+    for start_station in station_to_index.keys():
+        start_index = station_to_index[start_station]
+        distances, _ = dijkstra(graph, start_index)
+        for end_station in station_to_index.keys():
             if start_station != end_station:
+                end_index = station_to_index[end_station]
                 # Make sure to check if a path to the end_station exists
-                if end_station in distances:
-                    journey_times.append(distances[end_station])
+                if distances[end_index] != float('infinity'):
+                    journey_times.append(distances[end_index])
     return journey_times
 
 
@@ -31,8 +32,9 @@ def plot_histogram(journey_times):
     plt.show()
 
 def main():
-    graph = load_graph_from_csv("London_underground_data.csv")
-    journey_times = calculate_journey_times_for_all_pairs(graph)
+    dictionary_graph = load_graph_from_csv("London_underground_data.csv")
+    graph, station_to_index, _ = convert_graph(dictionary_graph)
+    journey_times = calculate_journey_times_for_all_pairs(graph, station_to_index)
     plot_histogram(journey_times)
 
 if __name__ == "__main__":
