@@ -1,43 +1,60 @@
 from loader import load_graph_from_csv
-from task1 import dijkstra
-from print_path import print_path as print_path_func
+from dijkstra import dijkstra
+from adjacency_list_graph import AdjacencyListGraph
 
 def get_user_input():
     start_station = input("Please enter your starting station: ")
     destination_station = input("Please enter your destination station: ")
     return start_station, destination_station
 
+def convert_graph(dictionary_graph):
+    stations = list(dictionary_graph.keys())
+    station_to_index = {station: index for index, station in enumerate(stations)}
+    index_to_station = {index: station for station, index in station_to_index.items()}
+
+    graph = AdjacencyListGraph(len(stations), weighted=True)
+
+    for start_station, destinations in dictionary_graph.items():
+        u = station_to_index[start_station]
+        for end_station, duration in destinations.items():
+            v = station_to_index[end_station]
+            graph.insert_edge(u, v, duration)  # Use actual duration as weight
+
+    return graph, station_to_index, index_to_station
+
 def main():
-    graph = load_graph_from_csv("London_underground_data.csv")
-    # Assuming `graph` is already defined and is the output of load_graph_from_csv()
-    start_station, destination_station = get_user_input()
+    dictionary_graph = load_graph_from_csv("London_underground_data.csv")
+    graph, station_to_index, index_to_station = convert_graph(dictionary_graph)
     
-    if start_station not in graph or destination_station not in graph:
+    start_station, destination_station = get_user_input()
+
+    start_index = station_to_index.get(start_station)
+    destination_index = station_to_index.get(destination_station)
+
+    if start_index is None or destination_index is None:
         print("One or more of the stations entered do not exist in the network.")
         return
 
-    # Run Dijkstra's algorithm to find shortest paths from start_station
-    distances, predecessors = dijkstra(graph, start_station)
+    distances, predecessors = dijkstra(graph, start_index)
 
-    # Check if the destination_station is reachable
-    if destination_station in distances:
-        # Define a mapping function (identity function if using station names)
-        mapping_func = lambda x: x
-
-        # Use the print_path function to get the path from start_station to destination_station
-        path = print_path_func(predecessors, start_station, destination_station, mapping_func)
-
-        # Check if a path exists
-        if path:
-            print("Path from {} to {}:".format(start_station, destination_station))
-            for station in path:
-                print(station)
-            total_duration = distances[destination_station]
-            print("Total journey time: {} minutes".format(total_duration))
-        else:
-            print("No path exists from {} to {}.".format(start_station, destination_station))
+    if distances[destination_index] == float('infinity'):
+        print(f"No path found from {start_station} to {destination_station}.")
     else:
-        print("Destination station is not reachable from the starting station.")
+        path = []
+        current = destination_index
+        total_duration = 0
+        while current != None:
+            path.insert(0, index_to_station[current])
+            prev = predecessors[current]
+            if prev != None:
+                # Use the original graph dictionary to get the duration
+                total_duration += dictionary_graph[index_to_station[prev]][index_to_station[current]]
+            current = prev
+
+        print("Path from {} to {}:".format(start_station, destination_station))
+        for station in path:
+            print(station)
+        print("Total journey time: {} minutes".format(total_duration))
 
 if __name__ == "__main__":
     main()
