@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from loader import load_graph_from_csv
 from dijkstra import dijkstra
-from main import convert_graph
+from task1 import convert_graph
 
 def calculate_journey_times_for_all_pairs(graph, station_to_index):
     journey_times = []

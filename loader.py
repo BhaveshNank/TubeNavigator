@@ -15,5 +15,5 @@ def load_graph_from_csv(csv_filename):
             graph[start][end] = int(duration)
             # Assuming the graph is undirected and travel time is the same in both directions
             graph[end][start] = int(duration)
-    
     return graph
+
