@@ -1,50 +1,46 @@
 import random
 import time
-from loader import load_graph_from_csv
 from dijkstra import dijkstra
 from adjacency_list_graph import AdjacencyListGraph
 
-def convert_to_adjacency_list_graph(dictionary_graph):
-    stations = list(dictionary_graph.keys())
-    station_to_index = {station: index for index, station in enumerate(stations)}
-    graph = AdjacencyListGraph(len(stations), weighted=True)
+def create_synthetic_data(num_stations):
+    """Create a synthetic graph with a specified number of stations."""
+    graph = AdjacencyListGraph(num_stations, weighted=True)
+    for i in range(num_stations):
+        for j in range(i+1, num_stations):
+            # Randomly decide if there's a connection and its duration
+            if random.random() < 0.5:  # 50% chance of a connection
+                duration = random.randint(1, 5)  # Duration between 1 to 5 minutes
+                graph.insert_edge(i, j, duration)
+                graph.insert_edge(j, i, duration)
+    return graph
 
-    for start_station, destinations in dictionary_graph.items():
-        start_index = station_to_index[start_station]
-        for end_station, weight in destinations.items():
-            end_index = station_to_index[end_station]
-            graph.insert_edge(start_index, end_index, weight)
-    
-    return graph, station_to_index
+def test_dijkstra_performance(graph, num_tests=10):
+    """Run Dijkstra's algorithm multiple times and record the average duration."""
+    total_time = 0
+    num_stations = graph.get_card_V()
+    for _ in range(num_tests):
+        start = random.randint(0, num_stations-1)
+        end = random.randint(0, num_stations-1)
+        start_time = time.time()
+        dijkstra(graph, start)
+        total_time += time.time() - start_time
+    return total_time / num_tests
 
 def main():
-    dictionary_graph = load_graph_from_csv("London_underground_data.csv")
-    graph, station_to_index = convert_to_adjacency_list_graph(dictionary_graph)
-    stations = list(dictionary_graph.keys())
-    sizes = [100, 150, 200]  # Subset sizes for testing
-    test_results = []
+    sizes = [50, 100, 150, 200]  # Different sizes of the synthetic datasets
+    results = []
 
     for size in sizes:
-        subset_stations = random.sample(stations, size)
-        start_station, end_station = random.sample(subset_stations, 2)
-        start_index = station_to_index[start_station]
-        end_index = station_to_index[end_station]
+        graph = create_synthetic_data(size)
+        avg_time = test_dijkstra_performance(graph)
+        results.append((size, avg_time))
+        print(f"Size: {size}, Average Time: {avg_time:.4f} seconds")
 
-        # Start timing
-        start_time = time.time()
-        # Run Dijkstra's algorithm
-        distances, _ = dijkstra(graph, start_index)
-        # End timing
-        end_time = time.time()
-
-        duration = end_time - start_time
-        test_results.append((size, start_station, end_station, duration))
-
-        print(f"Size: {size}, Start: {start_station}, End: {end_station}, Time: {duration:.4f} seconds")
-
-    # Print summary of test results
-    for size, start, end, duration in test_results:
-        print(f"Test with size {size}: From {start} to {end} took {duration:.4f} seconds.")
+    # Displaying the summarized results
+    print("\nPerformance Analysis:")
+    for size, avg_time in results:
+        print(f"Size {size}: {avg_time:.4f} seconds")
 
 if __name__ == "__main__":
     main()
