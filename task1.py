@@ -1,6 +1,7 @@
 from loader import load_graph_from_csv
 from dijkstra import dijkstra
 from adjacency_list_graph import AdjacencyListGraph
+import time
 
 def get_user_input():
     start_station = input("Please enter your starting station: ")
@@ -35,7 +36,11 @@ def main():
         print("One or more of the stations entered do not exist in the network.")
         return
 
+    start = time.time()
+
     distances, predecessors = dijkstra(graph, start_index)
+
+    end = time.time()
 
     if distances[destination_index] == float('infinity'):
         print(f"No path found from {start_station} to {destination_station}.")
@@ -56,5 +61,8 @@ def main():
             print(station)
         print("Total journey time: {} minutes".format(total_duration))
 
+    total_time = end - start
+    print(total_time)
+    
 if __name__ == "__main__":
     main()
