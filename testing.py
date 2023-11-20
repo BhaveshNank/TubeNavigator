@@ -21,7 +21,7 @@ def main():
     dictionary_graph = load_graph_from_csv("London_underground_data.csv")
     graph, station_to_index = convert_to_adjacency_list_graph(dictionary_graph)
     stations = list(dictionary_graph.keys())
-    sizes = [5, 10, 15]  # Subset sizes for testing
+    sizes = [100, 150, 200]  # Subset sizes for testing
     test_results = []
 
     for size in sizes:

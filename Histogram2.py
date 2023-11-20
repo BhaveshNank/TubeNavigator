@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from itertools import combinations
 from loader2 import load_graph_from_csv
 from dijkstra import dijkstra
-from main2 import convert_graph
+from task2 import convert_graph
 import time 
 
 start = time.time()
