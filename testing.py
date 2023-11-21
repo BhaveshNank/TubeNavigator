@@ -28,7 +28,7 @@ def test_dijkstra_performance(graph, num_tests=10):
     return total_time / num_tests
 
 def main():
-    sizes = [50, 100, 150, 200]  # Different sizes of the synthetic datasets
+    sizes = [10, 50, 100]  # Different sizes of the synthetic datasets
     results = []
 
     for size in sizes:
