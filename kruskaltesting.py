@@ -1,36 +1,57 @@
+import matplotlib.pyplot as plt
 import random
-import time
+from dijkstra import dijkstra
 from adjacency_list_graph import AdjacencyListGraph
-from task4a import kruskals_algorithm  # Replace with your actual Kruskal's algorithm import
 
-def create_synthetic_network(num_stations, connection_probability=0.5):
-    """Creates a synthetic network with a given number of stations and connection probability."""
+def create_synthetic_network(num_stations):
+    """ Create a synthetic network with specified number of stations. """
     graph = AdjacencyListGraph(num_stations, weighted=True)
     for i in range(num_stations):
-        for j in range(i + 1, num_stations):
-            if random.random() < connection_probability:  # Connection probability
-                weight = random.randint(1, 10)  # Random weight for the edge
-                graph.insert_edge(i, j, weight)
-                graph.insert_edge(j, i, weight)
+        for j in range(i+1, num_stations):
+            if random.random() < 0.5:  # 50% chance of a connection
+                duration = random.randint(1, 10)  # Random duration between stations
+                graph.insert_edge(i, j, duration)
+                graph.insert_edge(j, i, duration)
     return graph
 
-def test_kruskals_algorithm(graph):
-    """Tests Kruskal's algorithm on the graph and returns the execution time."""
-    start_time = time.time()
-    kruskals_algorithm(graph)
-    execution_time = time.time() - start_time
-    return execution_time
+def calculate_journey_time(graph, start_index, end_index):
+    """ Calculate journey time between two stations. """
+    distances, _ = dijkstra(graph, start_index)
+    return distances[end_index]
 
-# Test with different sizes of synthetic data
-sizes = [20]
-results = []
+def simulate_closure(graph, closed_stations):
+    """ Simulate closure of stations in the graph. """
+    for station in closed_stations:
+        # Implement logic to remove connections to/from this station
+        # For example, remove all edges connected to 'station'
 
-for size in sizes:
-    graph = create_synthetic_network(size)
-    time_taken = test_kruskals_algorithm(graph)
-    results.append((size, time_taken))
+def generate_histogram(journey_times, title):
+    plt.hist(journey_times, bins=range(min(journey_times), max(journey_times) + 1, 1), color='blue', alpha=0.7)
+    plt.title(title)
+    plt.xlabel('Journey Time')
+    plt.ylabel('Frequency')
+    plt.show()
 
-# Print the test results
-print("Kruskal's Algorithm Test Results:")
-for size, time_taken in results:
-    print(f"Size: {size}, Time Taken: {time_taken:.4f} seconds")
+def main():
+    num_stations = 20  # Example number of stations
+    graph = create_synthetic_network(num_stations)
+
+    # Indices for Station A and Station B
+    station_a_index = 0  # Replace with actual index
+    station_b_index = 1  # Replace with actual index
+
+    # Calculate journey time before closure
+    journey_time_before = calculate_journey_time(graph, station_a_index, station_b_index)
+
+    # Simulate closure
+    simulate_closure(graph, [2, 3])  # Example: Close stations 2 and 3
+
+    # Calculate journey time after closure
+    journey_time_after = calculate_journey_time(graph, station_a_index, station_b_index)
+
+    # Generate histograms
+    generate_histogram([journey_time_before], 'Journey Time Before Closure')
+    generate_histogram([journey_time_after], 'Journey Time After Closure')
+
+if __name__ == "__main__":
+    main()
