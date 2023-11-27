@@ -45,3 +45,6 @@ if __name__ == "__main__":
     # print("Graph loaded successfully")
     print("Number of stations:", len(station_to_index))
     # Add more print statements or logic as needed to test the functionality
+
+# l = load_graph_for_bfs("London_underground_data.csv")
+# print(l)

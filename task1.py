@@ -36,11 +36,11 @@ def main():
         print("One or more of the stations entered do not exist in the network.")
         return
 
-    start = time.time()
+    # start = time.time()
 
     distances, predecessors = dijkstra(graph, start_index)
 
-    end = time.time()
+    # end = time.time()
 
     if distances[destination_index] == float('infinity'):
         print(f"No path found from {start_station} to {destination_station}.")
@@ -61,8 +61,8 @@ def main():
             print(station)
         print("Total journey time: {} minutes".format(total_duration))
 
-    total_time = end - start
-    print(total_time)
+    # total_time = end - start
+    # print(total_time)
     
 if __name__ == "__main__":
     main()

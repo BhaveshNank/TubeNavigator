@@ -1,0 +1,42 @@
+Leicester Square,Piccadilly Circus
+Stepney Green,Whitechapel
+Earl's Court,West Kensington
+Baker Street,Great Portland Street
+Earl's Court,High Street Kensington
+Green Park,Victoria
+Harrow-on-the-Hill,North Harrow
+Hammersmith,Acton Town
+Earl's Court,Barons Court
+Camden Town,Mornington Crescent
+Oxford Circus,Bond Street
+Baker Street,Bond Street
+Harrow-on-the-Hill,Wembley Park
+Warren Street,Oxford Circus
+Waterloo,Kennington
+Hammersmith,Turnham Green
+Marylebone,Baker Street
+Waterloo,Southwark
+Finchley Road,Baker Street
+North Greenwich,Canning Town
+Tottenham,Oxford Circus
+Pimlico,Vauxhall
+King's Cross St. Pancras,Russell Square
+Chiswick Park,Acton Town
+Waterloo,Lambeth North
+Warren Street,Goodge Street
+Monument,Cannon Street
+Green Park,Hyde Park Corner
+Baker Street,Edgware Road
+South Woodford,Snaresbrook
+Liverpool Street,Bank
+Aldgate East,Liverpool Street
+King's Cross St. Pancras,Angel
+Oxford Circus,Green Park
+Ravenscourt Park,Stamford Brook
+Marble Arch,Lancaster Gate
+Green Park,Westminster
+Dollis Hill,Willesden Green
+Harrow-on-the-Hill,Northwick Park
+Westminster,Waterloo
+Bow Road,Mile End
+North Ealing,Park Royal

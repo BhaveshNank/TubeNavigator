@@ -26,4 +26,5 @@ def load_graph_from_csv(csv_filename):
             graph[start][end] = 1
             graph[end][start] = 1
     
-    return graph
+    return graph 
+    

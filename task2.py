@@ -1,6 +1,5 @@
 from loader import load_graph_from_csv
 from dijkstra import dijkstra
-# from print_path import print_path as print_path_func
 from adjacency_list_graph import AdjacencyListGraph
 
 def get_user_input():

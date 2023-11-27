@@ -19,32 +19,41 @@ def reconstruct_path(predecessors, start_index, end_index, index_to_station):
 
 def main():
     graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")
+
+    # Debug: Print graph's adjacency list
+    for i in range(graph.get_card_V()):
+        print(f"{index_to_station[i]}: {graph.get_adj_list(i)}")
+
+    # Debug: Print station to index mapping
+    print("Station to Index Mapping:", station_to_index)
+
     start_station, destination_station = get_user_input()
+    print(f"Start: {start_station}, End: {destination_station}")
 
     start_index = station_to_index.get(start_station)
     destination_index = station_to_index.get(destination_station)
+    print(f"Start index: {start_index}, End index: {destination_index}")
 
     if start_index is None or destination_index is None:
         print("One or more of the stations entered do not exist in the network.")
         return
 
-    # Perform BFS
     distances, predecessors = bfs(graph, start_index)
+    print(f"Distances: {distances}")
+    print(f"Predecessors: {predecessors}")
 
-    # Get the distance for the destination station
-    distance_to_destination = distances[destination_index]
-
-    if distance_to_destination < float('inf'):
+    if distances[destination_index] < float('inf'):
         path = reconstruct_path(predecessors, start_index, destination_index, index_to_station)
         if path:
             print(f"Path from {start_station} to {destination_station}:")
             for station in path:
                 print(station)
-            print(f"Total number of stations: {len(path) - 1}")  # Subtract 1 because path includes the starting station
+            print(f"Total number of stations: {len(path) - 1}")
         else:
-            print("No path found.")
+            print("Path not found.")
     else:
         print("Destination station is not reachable from the starting station.")
 
 if __name__ == "__main__":
     main()
+
