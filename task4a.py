@@ -1,5 +1,7 @@
-from loader3 import load_graph_for_bfs
+# Import necessary module
+from loader3 import load_graph_for_bfs # Import a function to load a graph for BFS
 
+# Function to get all edges in the graph
 def get_all_edges(graph):
     edges = set()
     for u in range(graph.get_card_V()):
@@ -10,6 +12,7 @@ def get_all_edges(graph):
                 edges.add((u, v))
     return edges
 
+# Kruskal's Algorithm to find the Minimum Spanning Tree
 def kruskals_algorithm(graph):
     edges = []
     for u in range(graph.get_card_V()):
@@ -32,7 +35,7 @@ def kruskals_algorithm(graph):
 
     return spanning_tree
 
-
+# Load the graph data for BFS from a CSV file
 graph, station_to_index, index_to_station = load_graph_for_bfs("London_underground_data.csv")
 # Assuming 'graph' is your tube network graph
 # Assuming graph is your AdjacencyListGraph instance
@@ -43,5 +46,6 @@ spanning_tree_edges = {(u, v) for u, v, _ in spanning_tree}  # Extract just the 
 
 severable_edges = all_edges - spanning_tree_edges
 
+# Print edges that can be severed to disconnect the network
 for edge in severable_edges:
     print(f"{index_to_station[edge[0]]} -- {index_to_station[edge[1]]}")
